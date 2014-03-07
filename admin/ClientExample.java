@@ -10,6 +10,7 @@ public class ClientExample {
     public static Client newTransportClient() {
         Settings settings = ImmutableSettings.settingsBuilder()
             .put("cluster.name", "elasticsearch")
+            .put("client.transport.sniff", true)
             .build();
               
         Client result = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
