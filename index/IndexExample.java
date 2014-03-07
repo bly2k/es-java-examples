@@ -46,15 +46,15 @@ public class IndexExample {
             client.admin().indices().prepareCreate(index).addMapping("doc", 
                 jsonBuilder().startObject()
                     .field("properties").startObject()
-                    .field("file").startObject()
-                        .field("type", "attachment")
-                        .field("fields").startObject()
-                            .field("file").startObject()
-                                .field("store", "yes")
+                        .field("file").startObject()
+                            .field("type", "attachment")
+                            .field("fields").startObject()
+                                .field("file").startObject()
+                                    .field("store", "yes")
+                                .endObject()
                             .endObject()
                         .endObject()
-                    .endObject()
-                .endObject())
+                    .endObject())
                 .execute()
                 .actionGet();
             
