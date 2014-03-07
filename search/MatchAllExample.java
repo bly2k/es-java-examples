@@ -33,8 +33,8 @@ public class MatchAllExample {
             
             SearchResponse response = client.prepareSearch(index).setQuery(q).execute().actionGet();
             System.out.println(
-                    "Hits: " + response.getHits().getTotalHits() + "\n" +
-                    "Time (ms): " + response.getTookInMillis());
+                "Hits: " + response.getHits().getTotalHits() + "\n" +
+                "Time (ms): " + response.getTookInMillis());
 
             int i = 0;
             for (SearchHit hit: response.getHits().hits()) {
