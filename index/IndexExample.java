@@ -21,6 +21,7 @@ public class IndexExample {
             XContentBuilder doc = XContentFactory.jsonBuilder().startObject()
                     .field("text", "Hello World")
                 .endObject();
+            
             client.prepareIndex(index, "doc").setSource(doc).setId("1").execute().actionGet();
         } catch (IOException e) {
             e.printStackTrace();

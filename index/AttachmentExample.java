@@ -22,11 +22,11 @@ public class AttachmentExample {
         try {
             client.admin().indices().prepareCreate(index).addMapping("doc", 
                 jsonBuilder().startObject()
-                    .field("properties").startObject()
-                        .field("file").startObject()
+                    .startObject("properties")
+                        .startObject("file")
                             .field("type", "attachment")
-                            .field("fields").startObject()
-                                .field("file").startObject()
+                            .startObject("fields")
+                                .startObject("file")
                                     .field("store", "yes")
                                 .endObject()
                             .endObject()
@@ -39,8 +39,7 @@ public class AttachmentExample {
             
             client.prepareIndex(index, "doc", "1")
                 .setSource(XContentFactory.jsonBuilder().startObject()
-                    .field("text", fileName)
-                    .field("file").startObject()
+                    .startObject("file")
                         .field("content", Base64.encodeFromFile(fileName))
                         .field("_indexed_chars", -1)
                     .endObject()
