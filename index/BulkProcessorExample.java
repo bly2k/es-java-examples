@@ -70,6 +70,7 @@ public class BulkProcessorExample {
             client.admin().indices().prepareDelete(index).execute().actionGet();
     
         final BulkProcessor bp = BulkProcessor.builder(client, new BulkProcessor.Listener() {
+            @Override
             public void beforeBulk(long executionId, BulkRequest request) {
             }
             
