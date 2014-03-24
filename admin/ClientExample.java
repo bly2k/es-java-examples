@@ -9,12 +9,17 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
 public class ClientExample {
     public static Client newTransportClient() {
+        Client result = newTransportClient("elasticsearch", "localhost");
+        return result;
+    }
+    
+    public static Client newTransportClient(String cluster, String host) {
         Settings settings = ImmutableSettings.settingsBuilder()
-            .put("cluster.name", "elasticsearch")
+            .put("cluster.name", cluster)
             .put("client.transport.sniff", true)
             .build();
               
-        Client result = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
+        Client result = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress(host, 9300));
         
         return result;
     }
