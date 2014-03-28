@@ -5,6 +5,8 @@ import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.Requests;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.ByteSizeUnit;
 import org.elasticsearch.common.unit.ByteSizeValue;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -45,7 +47,17 @@ public class BulkProcessorExample {
         .build();
         
         try {
-            for (int i = 0; i < 100000; i++) {
+            Settings settings = ImmutableSettings.settingsBuilder()
+                .put("number_of_shards", 1)
+                .put("number_of_replicas", 0)
+                .put("refresh_interval", -1)
+                .build();
+            
+            client.admin().indices().prepareCreate(index).setSettings(settings).execute().actionGet();
+            
+            client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+        
+            for (int i = 0; i < 10000; i++) {
                 try {
                     XContentBuilder source = XContentFactory.jsonBuilder().startObject()
                             .field("test", "this is document " + i)
@@ -56,6 +68,12 @@ public class BulkProcessorExample {
                     e.printStackTrace();
                 }
             }
+            
+            settings = ImmutableSettings.settingsBuilder()
+                .put("refresh_interval", "1s")
+                .build();
+            
+            client.admin().indices().prepareUpdateSettings(index).setSettings(settings).execute().actionGet();
         }
         finally {
             bp.close();
@@ -94,6 +112,16 @@ public class BulkProcessorExample {
         .build();
         
         try {
+            Settings settings = ImmutableSettings.settingsBuilder()
+                .put("number_of_shards", 1)
+                .put("number_of_replicas", 0)
+                .put("refresh_interval", -1)
+                .build();
+                
+            client.admin().indices().prepareCreate(index).setSettings(settings).execute().actionGet();
+            
+            client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+        
             for (int i = 0; i < 10000; i++) {
                 try {
                     XContentBuilder source = XContentFactory.jsonBuilder().startObject()
@@ -105,6 +133,12 @@ public class BulkProcessorExample {
                     e.printStackTrace();
                 }
             }
+            
+            settings = ImmutableSettings.settingsBuilder()
+                .put("refresh_interval", 1)
+                .build();
+            
+            client.admin().indices().prepareUpdateSettings(index).setSettings(settings).execute().actionGet();
         }
         finally {
             bp.close();

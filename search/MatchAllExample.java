@@ -1,6 +1,5 @@
 package search;
 
-import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -16,8 +15,8 @@ public class MatchAllExample {
         String index = "test";
 
         //delete index if exists
-        IndicesExistsResponse er = client.admin().indices().prepareExists(index).execute().actionGet();
-        if (er.isExists()) client.admin().indices().prepareDelete(index).execute().actionGet();
+        if (client.admin().indices().prepareExists(index).execute().actionGet().isExists())
+            client.admin().indices().prepareDelete(index).execute().actionGet();
     
         try {
             //{
