@@ -17,8 +17,10 @@ public class TtlExample {
         try {
             client.admin().indices().prepareCreate(index).addMapping("doc", 
                 jsonBuilder().startObject()
-                    .startObject("_ttl")
-                        .field("enabled", true)
+                    .startObject("doc")
+                        .startObject("_ttl")
+                            .field("enabled", true)
+                        .endObject()
                     .endObject()
                 .endObject())
                 .execute()

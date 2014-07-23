@@ -50,7 +50,6 @@ public class BulkProcessorExample {
             Settings settings = ImmutableSettings.settingsBuilder()
                 .put("number_of_shards", 1)
                 .put("number_of_replicas", 0)
-                .put("refresh_interval", -1)
                 .build();
             
             client.admin().indices().prepareCreate(index).setSettings(settings).execute().actionGet();
@@ -115,7 +114,6 @@ public class BulkProcessorExample {
             Settings settings = ImmutableSettings.settingsBuilder()
                 .put("number_of_shards", 1)
                 .put("number_of_replicas", 0)
-                .put("refresh_interval", -1)
                 .build();
                 
             client.admin().indices().prepareCreate(index).setSettings(settings).execute().actionGet();

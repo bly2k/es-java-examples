@@ -17,8 +17,10 @@ public class IdExample {
         try {
             client.admin().indices().prepareCreate(index).addMapping("doc", 
                 jsonBuilder().startObject()
-                    .startObject("_id")
-                        .field("path", "my_id")
+                    .startObject("doc")
+                        .startObject("_id")
+                            .field("path", "my_id")
+                        .endObject()
                     .endObject()
                 .endObject())
                 .execute()
