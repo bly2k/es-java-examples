@@ -10,7 +10,7 @@ import org.elasticsearch.client.Client;
 public class ClusterStateExample {
     public static void indexList(Client client) {
         try {
-            ClusterStateResponse response = client.admin().cluster().prepareState().execute().get();
+            ClusterStateResponse response = client.admin().cluster().prepareState().clear().setMetaData(true).execute().get();
             System.out.println("Index list:");
             for (ObjectCursor<String> cursor: response.getState().metaData().indices().keys()) {
                 String index = cursor.value;
